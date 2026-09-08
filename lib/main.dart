@@ -1,3 +1,4 @@
+import 'package:bloc_example2/bloc/slider_example/slider_bloc.dart';
 import 'package:bloc_example2/bloc/switch_example/switch_bloc.dart';
 import 'package:bloc_example2/ui/switch_example_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SwitchBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SwitchBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SliderBloc(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

@@ -1,8 +1,11 @@
+import 'package:bloc_example2/bloc/slider_example/slider_bloc.dart';
+import 'package:bloc_example2/bloc/slider_example/slider_state.dart';
 import 'package:bloc_example2/bloc/switch_example/switch_bloc.dart';
 import 'package:bloc_example2/bloc/switch_example/switch_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/slider_example/slider_event.dart';
 import '../bloc/switch_example/switch_state.dart';
 
 class SwitchExampleScreen extends StatefulWidget {
@@ -40,16 +43,23 @@ class _SwitchExampleScreenState extends State<SwitchExampleScreen> {
                     );
                   },
                 )
-
               ],
             ),
             SizedBox(height: 30,),
-            Container(
-              height: 200,
-              color: Colors.red.withOpacity(.2),
-            ),
+            BlocBuilder<SliderBloc, SliderState>(builder: (context, state){
+              return Container(
+                height: 200,
+                color: Colors.red.withOpacity(state.sliderValue),
+              );
+            }),
+
             SizedBox(height: 50,),
-            Slider(value: .2, onChanged: (v){})
+            BlocBuilder<SliderBloc, SliderState>(builder: (context, state){
+              return Slider(value: state.sliderValue, min: 0.0,
+                  max: 1.0, onChanged: (v){
+                context.read<SliderBloc>().add(OpacityAndSliderValueChange(sliderValue: v));
+              });
+            })
           ],
         ),
       ),
